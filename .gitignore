@@ -1,0 +1,17 @@
+# Python environments and generated files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Local databases and uploaded book content
+*.sqlite3
+main/media/
+
+# Collected static output
+main/staticfiles/

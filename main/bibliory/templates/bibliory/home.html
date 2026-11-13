@@ -1,0 +1,11 @@
+{% extends 'bibliory/base.html' %}
+{% block title %}Книжная полка — библиотека{% endblock %}
+{% block content %}
+<h1>Качай мозг — выбирай книгу</h1><p class="muted">Книжный зал открыт. Подбирай чтиво, читай онлайн или забирай с собой.</p>
+<form class="search" method="get"><input type="search" name="q" value="{{ query }}" placeholder="Какую книгу качаем?" aria-label="Фильтр по названию"><button class="button">На поиск</button></form>
+<section id="book-list" class="grid">{% include 'bibliory/_book_list.html' %}</section>
+{% if page.has_next %}<button id="load-more" class="button more" data-next="{{ page.next_page_number }}" data-query="{{ query|urlencode }}">Ещё один подход</button>{% endif %}
+{% endblock %}
+{% block scripts %}<script>
+const more=document.getElementById('load-more');if(more){more.addEventListener('click',async()=>{more.disabled=true;more.textContent='Подтягиваем вес…';const response=await fetch(`/?page=${more.dataset.next}&q=${more.dataset.query}`,{headers:{'X-Requested-With':'XMLHttpRequest'}});const html=await response.text();document.getElementById('book-list').insertAdjacentHTML('beforeend',html);const hasNext=response.headers.get('X-Has-Next');if(hasNext==='false'){more.remove();return}more.dataset.next=String(Number(more.dataset.next)+1);more.disabled=false;more.textContent='Ещё один подход';});}
+</script>{% endblock %}

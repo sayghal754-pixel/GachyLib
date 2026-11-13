@@ -1,0 +1,6 @@
+{% for book in page.object_list %}
+<article class="card">
+  <div class="cover">{% if book.cover %}<img src="{{ book.cover.url }}" alt="Обложка книги «{{ book.title }}">{% else %}<span class="cover-placeholder" aria-hidden="true">📖</span>{% endif %}</div>
+  <div class="cardbody"><h2 title="{{ book.title }}">{{ book.title }}</h2><p>{{ book.description|default:'Описание скоро появится.' }}</p>{% if book.file %}<div class="actions"><a class="book-action read-action" href="{% url 'read_book' book.pk %}" target="_blank" rel="noopener">Читать, бро</a><a class="book-action download-action" href="{{ book.file.url }}" download>Скачать</a></div>{% endif %}</div>
+</article>
+{% empty %}<div class="empty">Книги не найдены. Попробуйте изменить запрос.</div>{% endfor %}

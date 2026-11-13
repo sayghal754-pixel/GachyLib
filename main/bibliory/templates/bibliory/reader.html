@@ -1,0 +1,15 @@
+{% extends 'bibliory/base.html' %}
+{% block title %}Читать: {{ book.title }} — Дворфы подпивасы{% endblock %}
+{% block content %}
+<section class="reader-page">
+  <a class="back-link" href="{% url 'home' %}">← Вернуться в библиотеку</a>
+  <div class="reader-heading"><div><p class="reader-kicker">КНИЖНЫЙ ЗАЛ</p><h1>{{ book.title }}</h1></div><a class="button" href="{{ book.file.url }}" download>Скачать файл</a></div>
+  {% if reader_type == 'pdf' %}
+    <iframe class="pdf-reader" src="{{ book.file.url }}#toolbar=1" title="Книга: {{ book.title }}"></iframe>
+  {% elif reader_type == 'txt' %}
+    <article class="text-reader">{{ text }}</article>
+  {% else %}
+    <div class="reader-message"><h2>Этот формат не открывается в браузере</h2><p>Чтобы читать онлайн, загрузи книгу в формате PDF или TXT. Этот файл пока можно скачать.</p><a class="button" href="{{ book.file.url }}" download>Скачать книгу</a></div>
+  {% endif %}
+</section>
+{% endblock %}
